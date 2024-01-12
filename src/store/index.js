@@ -1,3 +1,3 @@
-import useDarkModeStore from './store';
-
-export { useDarkModeStore };
+import useDarkModeStore from './darkModeStore';
+import useUserInfoStore from './userInfoStore';
+export { useDarkModeStore , useUserInfoStore};
