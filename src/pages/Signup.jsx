@@ -4,6 +4,7 @@ import { useDarkModeStore } from "../store";
 import InformationCard from "../components/signup/InformationCard";
 import { useSignup } from "../hooks/useSignup";
 import { useNavigate } from "react-router";
+import { useUserInfoStore } from "../store";
 const items = [
   {
     label: "이름",
@@ -33,6 +34,7 @@ const items = [
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { userInfo, setUserInfo } = useUserInfoStore();
   const { darkMode } = useDarkModeStore();
   const [inputs, setInputs] = useState({
     text: "",
@@ -44,6 +46,8 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     signup(inputs.email, inputs.password, inputs.text);
+    userInfo.description = inputs.description;
+    setUserInfo(userInfo);
     console.log(inputs.text);
     //navigate("/");
   };

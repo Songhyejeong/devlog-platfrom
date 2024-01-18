@@ -4,18 +4,24 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useDarkModeStore } from "../../store";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserInfoStore } from "../../store";
+import { useLogin } from "../../hooks/useLogin";
+import { useLoginStore } from "../../store";
 
 const LoginModal = ({ isJoin, isClosed, CloseLoginModal, isJoinHandler }) => {
   const { darkMode } = useDarkModeStore();
+  const { isLogIn, toLogin } = useLoginStore();
   const navigate = useNavigate();
   /*이메일 유효성 검사*/
   const [email, setEmail] = useState(" ");
   const [password, setPassword] = useState("");
-
+  const { userInfo } = useUserInfoStore();
+  const { login } = useLogin();
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
   const handleData = (e) => {
     if (e.target.type === "email") {
       setEmail(e.target.value);
@@ -30,12 +36,19 @@ const LoginModal = ({ isJoin, isClosed, CloseLoginModal, isJoinHandler }) => {
     Mode = "회원가입";
   }
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (Mode === "회원가입") {
       navigate("/signup", { replace: false });
       console.log(email, password);
+    } else if (Mode === "로그인") {
+      event.preventDefault();
+      console.log(email, password);
+      login(email, password);
+
+      CloseLoginModal();
     }
   };
+
   const loginUri = `https://github.com/login/oauth/authorize?client_id=${
     import.meta.env.VITE_GITHUB_CLIENT_ID
   }&scope=repo:status read:repo_hook user:email&redirect_uri=http://localhost:3000/oauth/callback/github`;
@@ -90,9 +103,11 @@ const LoginModal = ({ isJoin, isClosed, CloseLoginModal, isJoinHandler }) => {
               </button>
             </ButtonBox>
             <ChangeMode darkMode={darkMode}>
-              {!isJoin && <p>아직회원이 아니신가요?</p>}
-              {isJoin && <p>이미 계정이 있으신가요?</p>}
-              <button onClick={() => isJoinHandler(isJoin)}>{Mode}</button>
+              {isJoin && <p>아직회원이 아니신가요?</p>}
+              {!isJoin && <p>이미 계정이 있으신가요?</p>}
+              <button onClick={() => isJoinHandler(isJoin)}>
+                {Mode ? "로그인" : "회원가입"}
+              </button>
             </ChangeMode>
           </Contents>
         </InitialBox>
@@ -107,11 +122,11 @@ const LoginModalLayout = styled.div`
   width: 100%;
   margin: 0rem;
   position: fixed;
-  z-index: 10;
+  //z-index: 10;
   display: ${(props) => (props.isClosed ? "none" : "flex")};
   justify-content: center;
   align-items: center;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0, 0.8);
   @media (max-width: 770px) {
     top: 0px;
     left: 0px;
@@ -146,7 +161,6 @@ const WelcomBox = styled.div`
   text-align: center;
   font-family: "Rubik", sans-serif;
   color: ${(props) => (props.darkMode ? "#d9d9d9" : "#495057")};
-
   background-color: ${(props) => (props.darkMode ? "#1e1e1e" : "#f8f9fa")};
   @media (max-width: 770px) {
     display: none;

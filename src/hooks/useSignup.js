@@ -4,7 +4,7 @@ import {  createUserWithEmailAndPassword , updateProfile} from "firebase/auth";
 import { useNavigate } from 'react-router';
 import { useUserInfoStore }from "../store"
 export const useSignup = () => {
-    const {userInfo} =useUserInfoStore();
+    const {userInfo, setUserInfo} =useUserInfoStore();
     const navigate = useNavigate();
    const signup = (email, password, displayName) => {
     createUserWithEmailAndPassword(appAuth, email, password)
@@ -18,9 +18,9 @@ export const useSignup = () => {
         updateProfile(appAuth.currentUser,{displayName})
             .then(()=> {
                 console.log('success')
-                userInfo.email = user.email;
-                userInfo.nickname = user.displayName;
-                console.log(userInfo);
+                userInfo.email= user.email;
+                userInfo.displayName = user.displayName;
+                setUserInfo(userInfo)
             }).catch((error)=> {
                     alert(error.message);
             })
