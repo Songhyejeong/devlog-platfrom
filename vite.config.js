@@ -6,11 +6,11 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
     server: {
         port: 3000,
-        proxy: {      '/*': {        
-            target: 'http://localhost:8080', // Spring 서버 주소        
-            changeOrigin: true,        
-            }   
-        }
+        // proxy: {      '/*': {        
+        //     target: 'http://localhost:8080', // Spring 서버 주소        
+        //     changeOrigin: true,        
+        //     }   
+        // }
     },
     plugins: [react(), svgr()],
 
