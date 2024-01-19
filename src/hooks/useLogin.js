@@ -14,7 +14,7 @@ export const useLogin = () => {
             console.log(user);
             userInfo.email= user.email;
             userInfo.displayName = user.displayName;
-           //userInfo.profileUrl = user.photoURL;
+           userInfo.profileUrl = user.photoURL;
             setUserInfo(userInfo)
             const accesstoken = user.accessToken;
             localStorage.setItem("accessToken", accesstoken);
