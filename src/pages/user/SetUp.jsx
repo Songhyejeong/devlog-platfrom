@@ -16,9 +16,10 @@ const SetUp = () => {
   const [isTitleInput, setIsTitleInput] = useState(false);
   const [isEmailInput, setIsEmailInput] = useState(false);
   const [isSocialInput, setIsSocialInput] = useState(false);
-  //   const [ImageUrl, setImageUrl] = useState(null);
+
+  const [ImageUrl, setImageUrl] = useState(null);
   const { userInfo, setUserInfo } = useUserInfoStore();
-  const auth = appAuth;
+
   //profile update
   const handleDescription = (e) => {
     userInfo.description = e.target.value;
@@ -41,26 +42,22 @@ const SetUp = () => {
       });
   };
   const handleProfile = (e) => {
-    e.preventDefault();
-    const { files } = e.target;
-    const uploadFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
-    reader.onloadend = () => {
-      console.log(reader.result);
-      userInfo.profileUrl = reader.result;
-      setUserInfo(userInfo);
-      updateProfile(auth.currentUser, {
-        photoURL: userInfo.profileUrl,
+    const url = e.target.value;
+    setImageUrl(url);
+  };
+  const submitProfile = () => {
+    userInfo.profileUrl = ImageUrl;
+    setUserInfo(userInfo);
+    console.log(ImageUrl);
+    updateProfile(appAuth.currentUser, {
+      photoURL: ImageUrl,
+    })
+      .then(() => {
+        console.log("success");
       })
-        .then(() => {
-          console.log("success");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    console.log(userInfo.profileUrl);
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <SetUpLayout>
@@ -68,12 +65,13 @@ const SetUp = () => {
         <SetUpUserBox>
           <ImageSetBox darkMode={darkMode}>
             <img src={userInfo.profileUrl} img="img" />
-            <label for="file">이미지 업로드</label>
+            <button onClick={submitProfile}>이미지 업로드(사진 url)</button>
             <input
-              type="file"
-              accept="image/*"
-              id="file"
-              onChange={handleProfile}
+              type="text"
+              value={ImageUrl}
+              onChange={(e) => {
+                handleProfile(e);
+              }}
             />
             <button>이미지 제거</button>
           </ImageSetBox>
@@ -293,28 +291,13 @@ const ImageSetBox = styled.div`
       height: 100px;
     }
   }
-  & > label {
+
+  & > input {
     height: 2rem;
     padding: 0rem 1rem;
     border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    @media (max-width: 770px) {
-      padding: 0rem 2rem;
-    }
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  & > input {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
+    outline: none;
+    border: 1px solid ${(props) => (props.darkMode ? "#4D4D4D" : "#e9ecef")};
   }
   & > button {
     height: 2rem;
