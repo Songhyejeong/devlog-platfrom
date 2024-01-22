@@ -8,4 +8,5 @@ import MyPageList from './user/MyPageList';
 import MyPagePost from './user/MyPagePost';
 import SetUp from './user/SetUp';
 import PostWrite from './PostWrite';
-export { Main ,NotFound, Signup, OauthCallback, MyPageIntro, MyPageList, MyPagePost, MyPage, SetUp, PostWrite };
+import Post from "./Post"
+export { Main ,NotFound, Signup, OauthCallback, MyPageIntro, MyPageList, MyPagePost, MyPage, SetUp, PostWrite,Post };
