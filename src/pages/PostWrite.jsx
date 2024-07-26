@@ -1,27 +1,58 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useDarkModeStore } from '../store';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useDarkModeStore } from "../store";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useUserInfoStore } from "../store";
+import { useFirestore } from "../hooks/useFirestore";
 
 const modules = {
     toolbar: {
-        container: [[{ header: [1, 2, 3, 4, false] }], ['bold', 'italic', 'underline', 'strike'], ['link', 'image']],
+        container: [
+            [{ header: [1, 2, 3, 4, false] }],
+            ["bold", "italic", "underline", "strike"],
+            ["link", "image"],
+        ],
     },
 };
 
 const PostWrite = () => {
+    const { userInfo } = useUserInfoStore();
     const { darkMode } = useDarkModeStore();
-    const [postContent, setPostContent] = useState('');
+    const [title, setTitle] = useState("");
+    const [postContent, setPostContent] = useState("");
     const [tagValue, setTagValue] = useState([]);
-    const [text, setText] = useState('');
+    const [text, setText] = useState("");
+    const [form, setFrom] = useState({
+        uid: userInfo.uid,
+        title: "",
+        tagValue: [],
+        postContent: "",
+        user: {},
+    });
+    //const a;
+
+    const { addDocument } = useFirestore("post");
+
+    const submitHandler = () => {
+        setFrom({
+            title: title,
+            tagValue: tagValue,
+            postContent: postContent,
+        });
+        console.log(form);
+        addDocument(form);
+    };
+    const titleHandler = (e) => {
+        setTitle(e.target.value);
+    };
     let count = 0;
     const handleKeyPress = (e) => {
         if (e.nativeEvent.isComposing) {
             return;
         }
-        if (e.key === 'Enter' && text.trim() !== ' ') {
+        if (e.key === "Enter" && text.trim() !== " ") {
             tagValue.map((item) => {
                 if (item === text) {
                     count++;
@@ -29,13 +60,17 @@ const PostWrite = () => {
                 }
             });
             if (count === 0) {
-                setText('');
+                setText("");
                 setTagValue((tagValue) => [...tagValue, text]);
             } else {
                 count = 0;
-                setText('');
+                setText("");
             }
-        } else if (e.key === 'Backspace' && text.length === 0 && tagValue.length > 0) {
+        } else if (
+            e.key === "Backspace" &&
+            text.length === 0 &&
+            tagValue.length > 0
+        ) {
             tagValue.pop();
             setTagValue(tagValue.filter((tag) => tag));
         }
@@ -44,7 +79,13 @@ const PostWrite = () => {
         <PostWriteLayout>
             <InputBox>
                 <TitleBox>
-                    <input type="text" placeholder="제목을 입력하세요" />
+                    <input
+                        type="text"
+                        placeholder="제목을 입력하세요"
+                        onChange={(e) => {
+                            titleHandler(e);
+                        }}
+                    />
                     <Line />
                     <TagBox darkMode={darkMode}>
                         {tagValue.map((item) => (
@@ -61,7 +102,7 @@ const PostWrite = () => {
                 </TitleBox>
                 <ContentBox>
                     <ReactQuill
-                        style={{ width: '100%', height: '644px' }}
+                        style={{ width: "100%", height: "644px" }}
                         modules={modules}
                         onChange={setPostContent}
                     />
@@ -77,7 +118,7 @@ const PostWrite = () => {
                 </div>
                 <ButtonBox darkMode={darkMode}>
                     <button>임시저장</button>
-                    <button>출간하기</button>
+                    <button onClick={submitHandler}>출간하기</button>
                 </ButtonBox>
             </SaveContentBox>
         </PostWriteLayout>
@@ -145,8 +186,8 @@ const TagBox = styled.div`
         padding-right: 0.75rem;
         display: flex;
         gap: 10px;
-        background: ${(props) => (props.darkMode ? '#2E2E2E' : '#f8f9fa;')};
-        color: ${(props) => (props.darkMode ? '#96f3d7' : '#12B886')};
+        background: ${(props) => (props.darkMode ? "#2E2E2E" : "#f8f9fa;")};
+        color: ${(props) => (props.darkMode ? "#96f3d7" : "#12B886")};
     }
     & > input {
         outline: none;
@@ -175,7 +216,7 @@ const ContentBox = styled.div`
     }
 `;
 const ContentViewBox = styled.div`
-    background-color: ${(props) => (props.darkMode ? '#0c0c0c' : '#fbfdfc')};
+    background-color: ${(props) => (props.darkMode ? "#0c0c0c" : "#fbfdfc")};
     width: 100%;
     height: auto;
     padding: 70px;
@@ -183,8 +224,9 @@ const ContentViewBox = styled.div`
         display: flex;
         flex-direction: column;
         :nth-child(n + 1) {
-            background-color: ${(props) => (props.darkMode ? '#0c0c0c' : '#fbfdfc')};
-            color: ${(props) => (props.darkMode ? '#fbfdfc' : '#0c0c0c')};
+            background-color: ${(props) =>
+                props.darkMode ? "#0c0c0c" : "#fbfdfc"};
+            color: ${(props) => (props.darkMode ? "#fbfdfc" : "#0c0c0c")};
         }
         & > h1 {
             font-size: 2.5rem;
@@ -261,9 +303,10 @@ const SaveContentBox = styled.div`
     width: 48.5%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
     padding-left: 10px;
-    background-color: ${(props) => (props.darkMode ? '#2E2E2E' : '#ffffff')};
+    background-color: ${(props) => (props.darkMode ? "#2E2E2E" : "#ffffff")};
     & > div {
-        background-color: ${(props) => (props.darkMode ? '#2E2E2E' : '#ffffff')};
+        background-color: ${(props) =>
+            props.darkMode ? "#2E2E2E" : "#ffffff"};
         padding-right: 10px;
         display: flex;
         flex-direction: row;
@@ -272,14 +315,17 @@ const SaveContentBox = styled.div`
         align-items: center;
         & > svg {
             cursor: pointer;
-            background-color: ${(props) => (props.darkMode ? '#2E2E2E' : '#ffffff')};
+            background-color: ${(props) =>
+                props.darkMode ? "#2E2E2E" : "#ffffff"};
         }
         & > p {
-            background-color: ${(props) => (props.darkMode ? '#2E2E2E' : '#ffffff')};
+            background-color: ${(props) =>
+                props.darkMode ? "#2E2E2E" : "#ffffff"};
             font-size: 1.125rem;
         }
         & > button {
-            background-color: ${(props) => (props.darkMode ? '#2E2E2E' : '#ffffff')};
+            background-color: ${(props) =>
+                props.darkMode ? "#2E2E2E" : "#ffffff"};
             height: 2.5rem;
             padding-left: 1.25rem;
             padding-right: 1.25rem;
@@ -298,13 +344,14 @@ const SaveContentBox = styled.div`
 const ButtonBox = styled.div`
     :first-child {
         cursor: pointer;
-        background-color: ${(props) => (props.darkMode ? '#2E2E2E' : '#ffffff')};
-        color: ${(props) => (props.darkMode ? '#96f3d7' : '#12B886')};
+        background-color: ${(props) =>
+            props.darkMode ? "#2E2E2E" : "#ffffff"};
+        color: ${(props) => (props.darkMode ? "#96f3d7" : "#12B886")};
     }
     :last-child {
         cursor: pointer;
-        color: ${(props) => (props.darkMode ? '#0c0c0c' : '#ffffff')};
-        background: ${(props) => (props.darkMode ? '#96f3d7' : '#12B886')};
+        color: ${(props) => (props.darkMode ? "#0c0c0c" : "#ffffff")};
+        background: ${(props) => (props.darkMode ? "#96f3d7" : "#12B886")};
     }
 `;
 

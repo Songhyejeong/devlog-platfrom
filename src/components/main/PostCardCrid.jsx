@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import PostCard from './PostCard';
-
+import React from "react";
+import styled from "styled-components";
+import PostCard from "./PostCard";
+import { useCollection } from "../../hooks/useCollection";
 const GridContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 기본: 3열 그리드 */
@@ -25,12 +25,15 @@ const GridContainer = styled.div`
 `;
 
 export default function PostCardCrid() {
-    const items = [1, 2, 3, 4, 5, 6]; // 예시 데이터
+    const { documents, error } = useCollection("post");
+    console.log(documents);
+    const items = [1, 2, 3, 4]; // 예시 데이터
     return (
         <GridContainer>
             {items.map((item) => (
                 <PostCard key={item} />
             ))}
+            <PostCard post={documents} />
         </GridContainer>
     );
 }
