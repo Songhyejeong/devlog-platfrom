@@ -29,8 +29,7 @@ const PostCardSeparator = styled.span`
     margin-right: 0.25rem;
 `;
 
-export default function PostCard(document) {
-    const { userInfo } = useUserInfoStore();
+export default function PostCard({ title, key, content, tagValue, user }) {
     let option = {
         root: null, //타겟 요소가 어디에 들어왔을 때 콜백함수를 실행할 것인지 결정한다. null이면 viewport 가 root로 지정된다.
         rootMargin: "0px",
@@ -44,9 +43,9 @@ export default function PostCard(document) {
                     alt=""
                 />
             </ImageBox>
-            <Title>푸바오의 일상</Title>
+            <Title>{title}</Title>
             <ContentBox>
-                <p>{document.content}</p>
+                <p>{content}</p>
             </ContentBox>
             <DateAndComment>
                 <span>2023년 10월 30일</span>
