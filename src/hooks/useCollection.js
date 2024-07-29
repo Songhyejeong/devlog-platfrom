@@ -1,6 +1,6 @@
 import { collection, onSnapshot } from "firebase/firestore"
 import { useEffect , useState} from "react"
-import { appFireStore } from "../firebase/config"
+import { db } from "../firebase/config"
 
 export const useCollection = (transaction) =>{
     
@@ -8,7 +8,7 @@ export const useCollection = (transaction) =>{
     const [error, setError] = useState(null);
 
     useEffect(() => {
-    const unsubscribe =  onSnapshot( collection(appFireStore, transaction), 
+    const unsubscribe =  onSnapshot( collection(db, transaction), 
         (snapshot) => {
             let result = [];
             snapshot.docs.forEach((doc) => {

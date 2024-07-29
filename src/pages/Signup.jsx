@@ -6,30 +6,30 @@ import { useSignup } from "../hooks/useSignup";
 import { useNavigate } from "react-router";
 import { useUserInfoStore } from "../store";
 const items = [
-    {
-        label: "이름입니다",
-        type: "text",
-        placeholder: "이름을 입력하세요.",
-        value: null,
-    },
-    {
-        label: "이메일",
-        type: "email",
-        placeholder: "이메일을 입력하세요.",
-        value: null,
-    },
-    {
-        label: "한 줄 소개",
-        type: "description",
-        placeholder: "당신을 한 줄로 소개해보세요.",
-        value: null,
-    },
-    {
-        label: "비밀번호",
-        type: "password",
-        placeholder: "비밀번호를 입력하세요",
-        value: null,
-    },
+  {
+    label: "이름입니다",
+    type: "text",
+    placeholder: "이름을 입력하세요.",
+    value: null,
+  },
+  {
+    label: "이메일",
+    type: "email",
+    placeholder: "이메일을 입력하세요.",
+    value: null,
+  },
+  {
+    label: "한 줄 소개",
+    type: "description",
+    placeholder: "당신을 한 줄로 소개해보세요.",
+    value: null,
+  },
+  {
+    label: "비밀번호",
+    type: "password",
+    placeholder: "비밀번호를 입력하세요",
+    value: null,
+  },
 ];
 
 const Signup = () => {

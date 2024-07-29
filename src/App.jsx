@@ -3,6 +3,7 @@ import { useDarkModeStore } from "./store";
 import { Route, Routes } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { MainLayout } from "./components/common";
+import { useParams } from "react-router-dom";
 import {
   NotFound,
   Main,
@@ -55,7 +56,7 @@ function App() {
                 <Route path="/my/intro" element={<MyPageIntro />} />
               </Route>
               <Route path="/set" element={<SetUp />} />
-              <Route path="/post" element={<Post />} />
+              <Route path="/post/:id" element={<Post />} />
             </Route>
             <Route path="/write" element={<PostWrite />} />
             <Route path="/oauth/callback/:oauth" element={<OauthCallback />} />
