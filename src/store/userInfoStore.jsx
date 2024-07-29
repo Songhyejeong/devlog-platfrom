@@ -2,7 +2,8 @@ import create from "zustand";
 import { persist } from "zustand/middleware";
 
 const defaultState = {
-  email: " ",
+  uid: "",
+  email: "",
   displayName: "",
   description: "",
   them: "DEVLOG",

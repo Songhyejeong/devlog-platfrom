@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { useUserInfoStore } from "../store";
 const items = [
   {
-    label: "이름",
+    label: "이름입니다",
     type: "text",
     placeholder: "이름을 입력하세요.",
     value: null,

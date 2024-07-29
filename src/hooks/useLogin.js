@@ -6,15 +6,16 @@ import {useLoginStore} from "../store"
 export const useLogin = () => {
     const {userInfo, setUserInfo} = useUserInfoStore();
     const {toLogin} = useLoginStore();
-   const login = (email, password) => {
+    const login = (email, password) => {
     signInWithEmailAndPassword(appAuth, email, password)
         .then((userCredential) => {
         const user = userCredential.user;
         if(user !== null) {
             console.log(user);
+            userInfo.uid = user.uid;
             userInfo.email= user.email;
             userInfo.displayName = user.displayName;
-           userInfo.profileUrl = user.photoURL;
+            userInfo.profileUrl = user.photoURL;
             setUserInfo(userInfo)
             const accesstoken = user.accessToken;
             localStorage.setItem("accessToken", accesstoken);
@@ -28,6 +29,6 @@ export const useLogin = () => {
         const err = error;
         console.log(err);
     });
-   } 
-   return {login}
+    } 
+    return {login}
 }

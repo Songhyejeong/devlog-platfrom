@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
 const GridItem = styled.div`
   background-color: #ddd;
   width: 20rem;
@@ -15,11 +14,12 @@ const GridItem = styled.div`
   flex-direction: column;
   @media (max-width: 1060px) {
     width: calc(50vw - 2rem);
-    height: calc(30vh - 2rem);
+    height: calc(40vh - 1rem);
   }
 
   @media (max-width: 770px) {
-    width: 100%;
+    width: 93%;
+    height: calc(45vh - 1rem);
   }
 `;
 
@@ -28,46 +28,45 @@ const PostCardSeparator = styled.span`
   margin-right: 0.25rem;
 `;
 
-export default function PostCard() {
-  let option = {
-    root: null, //타겟 요소가 어디에 들어왔을 때 콜백함수를 실행할 것인지 결정한다. null이면 viewport 가 root로 지정된다.
-    rootMargin: "0px",
-    threshold: 1.0,
-  };
-  return (
-    <GridItem>
-      <ImageBox>
-        <img
-          src="https://cdn.eyesmag.com/content/uploads/posts/2023/07/06/everland-panda-birthday-party-6128130b-e93a-44b2-8625-459271c39056.jpg"
-          alt=""
-        />
-      </ImageBox>
-      <Title>푸바오의 일상</Title>
-      <ContentBox>
-        <p>
-          제가 어제 푸바오를 보고 왔는데요 그게 글쎄 푸바오가 귀여운 건 다
-          아이라인 때문이라네여 왜냐면 제가 한 번 아이라인을 지워봤더니
-          못생겼더래요
-        </p>
-      </ContentBox>
-      <DateAndComment>
-        <span>2023년 10월 30일</span>
-        <PostCardSeparator>·</PostCardSeparator>
-        <span>0 개의 댓글</span>
-      </DateAndComment>
-      <DetailBox>
-        <Profile>
-          <img src="/img/default-profile.png" />
-          <p>by</p>
-          <p>혜정</p>
-        </Profile>
-        <Liked>
-          <FavoriteIcon />
-          <p>150</p>
-        </Liked>
-      </DetailBox>
-    </GridItem>
-  );
+export default function PostCard({ title, key, content , user}) {
+    console.log(title);
+    key && console.log(key);
+    //user&&console.log(user);
+    let option = {
+        root: null, //타겟 요소가 어디에 들어왔을 때 콜백함수를 실행할 것인지 결정한다. null이면 viewport 가 root로 지정된다.
+        rootMargin: "0px",
+        threshold: 1.0,
+    };
+    return (
+        <GridItem>
+            <ImageBox>
+                <img
+                    src="https://cdn.eyesmag.com/content/uploads/posts/2023/07/06/everland-panda-birthday-party-6128130b-e93a-44b2-8625-459271c39056.jpg"
+                    alt=""
+                />
+            </ImageBox>
+            <Title>{title}</Title>
+            <ContentBox>
+                <p>{content}</p>
+            </ContentBox>
+            <DateAndComment>
+                <span>2024년 7월 28일</span>
+                <PostCardSeparator>·</PostCardSeparator>
+                <span>0 개의 댓글</span>
+            </DateAndComment>
+            <DetailBox>
+                <Profile>
+                    <img src={user.profileUrl} />
+                    <p>by</p>
+                    <p>{user.displayName}</p>
+                </Profile>
+                <Liked>
+                    <FavoriteIcon />
+                    <p>150</p>
+                </Liked>
+            </DetailBox>
+        </GridItem>
+    );
 }
 
 const ImageBox = styled.div`
@@ -152,6 +151,7 @@ const Profile = styled.div`
   & > img {
     width: 15px;
     height: 100%;
+    border-radius: 100px;
   }
   :nth-child(2) {
     color: #ced4da;

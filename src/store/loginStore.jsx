@@ -6,7 +6,7 @@ const useLoginStore = create(
     (set) => ({
       isLogIn: false,
       toLogin: () => {
-        const accesstoken = localStorage.getItem("accessToken");
+        const accesstoken = localStorage.getItem("accessToken", );
         if (accesstoken) {
           set({ isLogIn: true });
         } else if (!accesstoken) {
