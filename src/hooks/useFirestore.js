@@ -23,7 +23,6 @@ export const useFirestore = (transaction) => {
         }
     }
     const deleteDocument = (id) =>{
-        
     }
     return {addDocument, deleteDocument }
 }

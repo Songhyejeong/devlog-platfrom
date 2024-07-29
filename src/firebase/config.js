@@ -17,3 +17,4 @@ const db = getFirestore(app);
 const timestamp = Timestamp;
 
 export {appAuth, db, timestamp};
+

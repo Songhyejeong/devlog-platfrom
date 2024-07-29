@@ -191,6 +191,7 @@ const TagBox = styled.div`
     padding-right: 0.75rem;
     display: flex;
     gap: 10px;
+
     background: ${(props) => (props.darkMode ? "#2E2E2E" : "#f8f9fa;")};
     color: ${(props) => (props.darkMode ? "#96f3d7" : "#12B886")};
   }
@@ -221,26 +222,41 @@ const ContentBox = styled.div`
   }
 `;
 const ContentViewBox = styled.div`
-  background-color: ${(props) => (props.darkMode ? "#0c0c0c" : "#fbfdfc")};
-  width: 100%;
-  height: auto;
-  padding: 70px;
-  & > div {
-    display: flex;
-    flex-direction: column;
-    :nth-child(n + 1) {
-      background-color: ${(props) => (props.darkMode ? "#0c0c0c" : "#fbfdfc")};
-      color: ${(props) => (props.darkMode ? "#fbfdfc" : "#0c0c0c")};
-    }
-    & > h1 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      & > em {
-        font-style: italic;
-      }
-      & > strong {
-        & > em {
-          font-style: italic;
+    background-color: ${(props) => (props.darkMode ? "#0c0c0c" : "#fbfdfc")};
+    width: 100%;
+    height: auto;
+    padding: 70px;
+    & > div {
+        display: flex;
+        flex-direction: column;
+        :nth-child(n + 1) {
+            background-color: ${(props) =>
+                props.darkMode ? "#0c0c0c" : "#fbfdfc"};
+            color: ${(props) => (props.darkMode ? "#fbfdfc" : "#0c0c0c")};
+        }
+        & > h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            & > em {
+                font-style: italic;
+            }
+            & > strong {
+                & > em {
+                    font-style: italic;
+                }
+            }
+        }
+        & > h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            & > em {
+                font-style: italic;
+            }
+            & > strong {
+                & > em {
+                    font-style: italic;
+                }
+            }
         }
       }
     }
@@ -313,16 +329,45 @@ const SaveContentBox = styled.div`
     padding-right: 10px;
     display: flex;
     flex-direction: row;
-    gap: 10px;
-    text-align: center;
-    align-items: center;
-    & > svg {
-      cursor: pointer;
-      background-color: ${(props) => (props.darkMode ? "#2E2E2E" : "#ffffff")};
-    }
-    & > p {
-      background-color: ${(props) => (props.darkMode ? "#2E2E2E" : "#ffffff")};
-      font-size: 1.125rem;
+    justify-content: space-between;
+    bottom: 0px;
+    height: 64px;
+    width: 48.5%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    padding-left: 10px;
+    background-color: ${(props) => (props.darkMode ? "#2E2E2E" : "#ffffff")};
+    & > div {
+        background-color: ${(props) =>
+            props.darkMode ? "#2E2E2E" : "#ffffff"};
+        padding-right: 10px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        text-align: center;
+        align-items: center;
+        & > svg {
+            cursor: pointer;
+            background-color: ${(props) =>
+                props.darkMode ? "#2E2E2E" : "#ffffff"};
+        }
+        & > p {
+            background-color: ${(props) =>
+                props.darkMode ? "#2E2E2E" : "#ffffff"};
+            font-size: 1.125rem;
+        }
+        & > button {
+            background-color: ${(props) =>
+                props.darkMode ? "#2E2E2E" : "#ffffff"};
+            height: 2.5rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
     }
     & > button {
       background-color: ${(props) => (props.darkMode ? "#2E2E2E" : "#ffffff")};
@@ -352,6 +397,7 @@ const ButtonBox = styled.div`
     color: ${(props) => (props.darkMode ? "#0c0c0c" : "#ffffff")};
     background: ${(props) => (props.darkMode ? "#96f3d7" : "#12B886")};
   }
+
 `;
 
 export default PostWrite;

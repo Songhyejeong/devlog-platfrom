@@ -7,7 +7,6 @@ export const useCollection = (transaction) =>{
     const [documents, setDocuments] = useState(null);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
     const unsubscribe =  onSnapshot( collection(db, transaction), 
         (snapshot) => {
             let result = [];

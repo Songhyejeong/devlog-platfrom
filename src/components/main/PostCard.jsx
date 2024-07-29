@@ -21,6 +21,7 @@ const GridItem = styled.div`
     width: 93%;
     height: calc(45vh - 1rem);
   }
+
 `;
 
 const PostCardSeparator = styled.span`
@@ -159,4 +160,5 @@ const Profile = styled.div`
     color: #212529;
     font-weight: 600;
   }
+
 `;

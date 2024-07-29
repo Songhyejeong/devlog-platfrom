@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useCollection } from "../hooks/useCollection";
+
 import { useParams } from "react-router";
+
 const POSTITEM = {
     title: "글 제목입니다.",
     tagValue: ["react", "js"],
