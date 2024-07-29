@@ -1,27 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useUserInfoStore } from "../../store";
 const GridItem = styled.div`
-    background-color: #ddd;
-    width: 20rem;
-    background: var(--bg-element1);
-    border-radius: 4px;
-    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
-    transition: box-shadow 0.25s ease-in, transform 0.25s ease-in;
-    margin: 1rem;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    @media (max-width: 1060px) {
-        width: calc(50vw - 2rem);
-        height: calc(40vh - 1rem);
-    }
+  background-color: #ddd;
+  width: 20rem;
+  background: var(--bg-element1);
+  border-radius: 4px;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.25s ease-in, transform 0.25s ease-in;
+  margin: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 1060px) {
+    width: calc(50vw - 2rem);
+    height: calc(40vh - 1rem);
+  }
 
-    @media (max-width: 770px) {
-        width: 93%;
-        height: calc(45vh - 1rem);
-    }
+  @media (max-width: 770px) {
+    width: 93%;
+    height: calc(45vh - 1rem);
+  }
+
 `;
 
 const PostCardSeparator = styled.span`
@@ -55,9 +55,9 @@ export default function PostCard(document) {
             </DateAndComment>
             <DetailBox>
                 <Profile>
-                    <img src={userInfo.profileUrl} />
+                    <img src={user.profileUrl} />
                     <p>by</p>
-                    <p>혜정</p>
+                    <p>{user.displayName}</p>
                 </Profile>
                 <Liked>
                     <FavoriteIcon />
@@ -138,26 +138,27 @@ const Liked = styled.div`
     }
 `;
 const Profile = styled.div`
-    width: 100px;
-    height: 15px;
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    margin-left: 10px;
-    font-size: 12px;
-    align-items: center;
+  width: 100px;
+  height: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: 10px;
+  font-size: 12px;
+  align-items: center;
+  border-radius: 100px;
+  & > img {
+    width: 15px;
+    height: 100%;
     border-radius: 100px;
-    & > img {
-        width: 15px;
-        height: 100%;
-        border-radius: 100px;
-    }
-    :nth-child(2) {
-        color: #ced4da;
-        font-size: 10px;
-    }
-    :nth-child(3) {
-        color: #212529;
-        font-weight: 600;
-    }
+  }
+  :nth-child(2) {
+    color: #ced4da;
+    font-size: 10px;
+  }
+  :nth-child(3) {
+    color: #212529;
+    font-weight: 600;
+  }
+
 `;

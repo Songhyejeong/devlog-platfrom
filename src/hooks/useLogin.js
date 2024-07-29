@@ -6,7 +6,7 @@ import {useLoginStore} from "../store"
 export const useLogin = () => {
     const {userInfo, setUserInfo} = useUserInfoStore();
     const {toLogin} = useLoginStore();
-   const login = (email, password) => {
+    const login = (email, password) => {
     signInWithEmailAndPassword(appAuth, email, password)
         .then((userCredential) => {
         const user = userCredential.user;
@@ -29,6 +29,6 @@ export const useLogin = () => {
         const err = error;
         console.log(err);
     });
-   } 
-   return {login}
+    } 
+    return {login}
 }

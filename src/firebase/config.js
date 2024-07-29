@@ -13,7 +13,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const appAuth = getAuth();
-const appFireStore = getFirestore(app);
+const db = getFirestore(app);
 const timestamp = Timestamp;
 
-export {appAuth, appFireStore, timestamp};
+export {appAuth, db, timestamp};
+

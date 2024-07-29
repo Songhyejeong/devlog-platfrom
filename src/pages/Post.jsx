@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useCollection } from "../hooks/useCollection";
+
+import { useParams } from "react-router";
 
 const POSTITEM = {
     title: "글 제목입니다.",
@@ -10,43 +12,76 @@ const POSTITEM = {
     user: "hyejeong",
     date: "2024. 01. 19",
 };
+
+
 const like = 100;
 const Post = () => {
-    const { documents, error } = useCollection("post");
-    console.log(POSTITEM.tagValue);
-    return (
-        <PostLayout>
-            <PostBox>
-                <HeaderBox>
-                    <h1>{POSTITEM.title}</h1>
-                    <UserBox>
-                        <div>
-                            <p>{POSTITEM.user}</p>
-                            <p>{POSTITEM.date}</p>
-                        </div>
-                        <button>
-                            <FavoriteIcon />
-                            {like}
-                        </button>
-                    </UserBox>
-                    <TagBox>
-                        {POSTITEM.tagValue.map((item) => {
-                            return <button>{item}</button>;
-                        })}
-                    </TagBox>
-                </HeaderBox>
-                <BodyBox>
-                    <ContentViewBox>
-                        <div
-                            dangerouslySetInnerHTML={{
-                                __html: POSTITEM.postContent,
-                            }}
-                        ></div>
-                    </ContentViewBox>
-                </BodyBox>
-            </PostBox>
-        </PostLayout>
-    );
+const { documents, error } = useCollection("post");
+const { id } = useParams();
+const [post, setPost] = useState(null);
+const [loading, setLoading] = useState(true);
+
+  /*for(let doc of documents){
+    if(doc.uid === id){
+      setPost(doc);
+      break;
+    }
+  }*/
+  useEffect(() => {
+      if (documents) {
+          const foundPost = documents.find((doc) => doc.id === id);
+          setPost(foundPost);
+          setLoading(false);
+      }
+  }, [documents, id]);
+  if (loading) {
+      return <div>Loading...</div>;
+  }
+  if (error) {
+      return <div>Error: {error}</div>;
+  }
+  if (!post) {
+      return <div>No post found</div>;
+  }
+
+
+
+  console.log(post);
+  console.log(documents);
+ // console.log(documents.tagValue);
+  return (
+      <PostLayout>
+          <PostBox>
+              <HeaderBox>
+                  <h1>{post.title}</h1>
+                  <UserBox>
+                      <div>
+                          <p>{post.user}</p>
+                          <p>{post.date}</p>
+                      </div>
+                      <button>
+                          <FavoriteIcon />
+                          {like}
+                      </button>
+                  </UserBox>
+                  <TagBox>
+                      {post.tagValue.map((item) => {
+                          return <button>{item}</button>;
+                      })}
+                  </TagBox>
+              </HeaderBox>
+              <BodyBox>
+                  <ContentViewBox>
+                      <div
+                          dangerouslySetInnerHTML={{
+                              __html: post.postContent,
+                          }}
+                      ></div>
+                  </ContentViewBox>
+              </BodyBox>
+          </PostBox>
+      </PostLayout>
+  );
 };
 
 export default Post;
